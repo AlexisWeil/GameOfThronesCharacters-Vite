@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { CharactersList } from './pages/CharactersList/CharactersList.page.tsx';
+import { BrowserRouter } from 'react-router-dom';
+import { Template } from './components/Template/Template.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <CharactersList />
+    <BrowserRouter>
+      <Template />
+    </BrowserRouter>
   </React.StrictMode>,
 );
