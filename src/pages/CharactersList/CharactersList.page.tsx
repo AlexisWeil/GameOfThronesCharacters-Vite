@@ -2,6 +2,9 @@ import { useContext } from 'react';
 import { AddCharacterForm } from '../../components/AddCharacterForm/AddCharacterForm.tsx';
 import { CharactersContext } from '../../contexts/CharactersContext.ts';
 import { useNavigate } from 'react-router-dom';
+import { Title } from '../../components/Title/Title.tsx';
+import { CharacterListItem, List } from './CharactersList.style.tsx';
+import { Avatar } from '../../components/Avatar/Avatar.tsx';
 
 export const CharactersList = () => {
   const { charactersList, addCharacter } = useContext(CharactersContext);
@@ -9,24 +12,24 @@ export const CharactersList = () => {
 
   return (
     <>
-      <h1>Game of thrones Characters</h1>
+      <Title>Game of thrones Characters</Title>
       <AddCharacterForm onAddCharacter={addCharacter} /> <br />
       <br />
-      <ul>
+      <List>
         {charactersList.map((character) => (
-          <li
+          <CharacterListItem
             onClick={() => navigate('/character/' + character.id)}
             key={character.id}
           >
-            {character.id}) <b>{character.name}</b>
-            <img
+            <Avatar
+              size="SMALL"
               alt={character.name}
               src={character.imageUrl}
-              style={{ maxWidth: '100px' }}
             />
-          </li>
+            {character.id}) <b>{character.name}</b>
+          </CharacterListItem>
         ))}
-      </ul>
+      </List>
     </>
   );
 };

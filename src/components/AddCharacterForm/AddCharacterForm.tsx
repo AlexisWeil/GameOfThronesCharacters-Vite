@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { Character } from '../../models/Character.ts';
+import {
+  AddCharacterFormWrapper,
+  FormLine,
+} from './AddCharacterForm.style.tsx';
+import { Button } from '../Button/Button.tsx';
 
 interface Props {
   onAddCharacter: (characterToAdd: Character) => void;
@@ -27,61 +32,64 @@ export const AddCharacterForm = ({ onAddCharacter }: Props) => {
   };
 
   return (
-    <div>
-      Name:
-      <input
-        type="text"
-        value={characterToAdd.name || ''}
-        onChange={(e) =>
-          setCharacterToAdd({
-            ...characterToAdd,
-            name: e.target.value,
-          })
-        }
-        ref={nameInputRef}
-      />
-      <br />
-      Image URL:{' '}
-      <input
-        type="text"
-        value={characterToAdd.imageUrl || ''}
-        onChange={(e) =>
-          setCharacterToAdd({
-            ...characterToAdd,
-            imageUrl: e.target.value,
-          })
-        }
-      />{' '}
-      <br />
-      Title:{' '}
-      <input
-        type="text"
-        value={characterToAdd.title || ''}
-        onChange={(e) =>
-          setCharacterToAdd({
-            ...characterToAdd,
-            title: e.target.value,
-          })
-        }
-      />
-      <br />
-      Family:{' '}
-      <input
-        type="text"
-        value={characterToAdd.family || ''}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') onAddCharacterClick();
-        }}
-        onChange={(e) =>
-          setCharacterToAdd({
-            ...characterToAdd,
-            family: e.target.value,
-          })
-        }
-      />
-      <br />
-      <br />
-      <button onClick={() => onAddCharacterClick()}>Add character</button>
-    </div>
+    <AddCharacterFormWrapper>
+      <FormLine>
+        <span>Name</span>
+        <input
+          type="text"
+          value={characterToAdd.name || ''}
+          onChange={(e) =>
+            setCharacterToAdd({
+              ...characterToAdd,
+              name: e.target.value,
+            })
+          }
+          ref={nameInputRef}
+        />
+      </FormLine>
+      <FormLine>
+        <span>Image URL</span>
+        <input
+          type="text"
+          value={characterToAdd.imageUrl || ''}
+          onChange={(e) =>
+            setCharacterToAdd({
+              ...characterToAdd,
+              imageUrl: e.target.value,
+            })
+          }
+        />
+      </FormLine>
+      <FormLine>
+        <span>Title</span>
+        <input
+          type="text"
+          value={characterToAdd.title || ''}
+          onChange={(e) =>
+            setCharacterToAdd({
+              ...characterToAdd,
+              title: e.target.value,
+            })
+          }
+        />
+      </FormLine>
+      <FormLine>
+        <span>Family</span>
+        <input
+          type="text"
+          value={characterToAdd.family || ''}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') onAddCharacterClick();
+          }}
+          onChange={(e) =>
+            setCharacterToAdd({
+              ...characterToAdd,
+              family: e.target.value,
+            })
+          }
+        />
+      </FormLine>
+      <Button onClick={() => onAddCharacterClick()}>Add character</Button>
+    </AddCharacterFormWrapper>
   );
 };
