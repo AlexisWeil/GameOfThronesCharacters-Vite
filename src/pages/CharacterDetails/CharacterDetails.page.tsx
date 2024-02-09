@@ -1,16 +1,15 @@
 import { Link, useParams } from 'react-router-dom';
-import { useContext } from 'react';
-import { CharactersContext } from '../../contexts/CharactersContext.ts';
 import { CharacterDetails } from '../../components/CharacterDetails/CharacterDetails.tsx';
 import {
   CharacterDetailsPageWrapper,
   NoCharacter,
 } from './CharacterDetails.style.tsx';
+import { useCharacters } from '../../hooks/useCharacters.ts';
 
 export const CharacterDetailsPage = () => {
   // On pourrait créer un hook pour extraire cette logique de récupération
   const { id } = useParams();
-  const { charactersList } = useContext(CharactersContext);
+  const { charactersList } = useCharacters();
 
   const characterId = parseInt(id || '-1');
 

@@ -11,6 +11,10 @@ export const CharacterListItem = styled.li`
   margin-bottom: 1em;
   cursor: pointer;
 
+  & > svg {
+    margin-right: 1vw;
+  }
+
   & > ${Avatar} {
     margin-right: 2vw;
   }

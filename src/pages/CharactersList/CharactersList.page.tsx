@@ -1,13 +1,14 @@
-import { useContext } from 'react';
 import { AddCharacterForm } from '../../components/AddCharacterForm/AddCharacterForm.tsx';
-import { CharactersContext } from '../../contexts/CharactersContext.ts';
 import { useNavigate } from 'react-router-dom';
 import { Title } from '../../components/Title/Title.tsx';
 import { CharacterListItem, List } from './CharactersList.style.tsx';
 import { Avatar } from '../../components/Avatar/Avatar.tsx';
+import { useCharacters } from '../../hooks/useCharacters.ts';
+import { MdDelete as DeleteIcon } from 'react-icons/md';
 
 export const CharactersList = () => {
-  const { charactersList, addCharacter } = useContext(CharactersContext);
+  const { charactersList, fetchingCharacters, addCharacter, deleteCharacter } =
+    useCharacters();
   const navigate = useNavigate();
 
   return (
@@ -16,11 +17,19 @@ export const CharactersList = () => {
       <AddCharacterForm onAddCharacter={addCharacter} /> <br />
       <br />
       <List>
+        {fetchingCharacters && <div>Loading ...</div>}
+
         {charactersList.map((character) => (
           <CharacterListItem
             onClick={() => navigate('/character/' + character.id)}
             key={character.id}
           >
+            <DeleteIcon
+              onClick={(e) => {
+                e.stopPropagation();
+                deleteCharacter(character.id);
+              }}
+            />
             <Avatar
               size="SMALL"
               alt={character.name}

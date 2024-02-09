@@ -1,32 +1,39 @@
+import { Character } from '../models/Character.ts';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../store.ts';
 import {
-  APICharacter,
-  Character,
-  parseAPICharacter,
-} from '../models/Character.ts';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+  addCharacter,
+  deleteCharacter,
+  fetchCharacters,
+} from '../reducers/charactersReducer.ts';
 
 export const useCharacters = () => {
-  const [charactersList, setCharactersList] = useState<Character[]>([]);
+  const dispatch = useAppDispatch();
+  const { charactersList, fetchingCharacters } = useAppSelector(
+    (state) => state.characters,
+  );
 
   useEffect(() => {
-    axios
-      .get<APICharacter[]>('https://thronesapi.com/api/v2/Characters')
-      .then((res) =>
-        setCharactersList(
-          res.data.map((apiChar) => parseAPICharacter(apiChar)),
-        ),
-      );
+    if (charactersList.length === 0) dispatch(fetchCharacters());
   }, []);
 
-  const addCharacter = (characterToAdd: Character) => {
-    setCharactersList(
-      charactersList.concat({
+  const _addCharacter = (characterToAdd: Character) => {
+    dispatch(
+      addCharacter({
         ...characterToAdd,
         id: charactersList.length,
       }),
     );
   };
 
-  return { charactersList, addCharacter };
+  const _deleteCharacter = (characterId: number) => {
+    dispatch(deleteCharacter(characterId));
+  };
+
+  return {
+    charactersList,
+    fetchingCharacters,
+    addCharacter: _addCharacter,
+    deleteCharacter: _deleteCharacter,
+  };
 };
